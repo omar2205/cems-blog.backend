@@ -1,6 +1,6 @@
 ## Description
 
-A nestjs backend for a blog. A task for cems-it.com.
+A Nestjs backend for a blog. A task for cems-it.com.
 
 ## Installation
 
