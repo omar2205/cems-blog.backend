@@ -23,6 +23,8 @@ export class BlogService {
     content: string,
     author: string,
   ): Promise<Post> {
+    if (!title || !content || !author)
+      throw new BadRequestException('Missing items');
     const newPost = new this.postModel({ title, content, author });
     return newPost.save();
   }
