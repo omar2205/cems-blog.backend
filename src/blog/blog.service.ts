@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Post } from './post.schema';
@@ -8,10 +8,13 @@ export class BlogService {
   constructor(@InjectModel(Post.name) private postModel: Model<Post>) {}
 
   async getAllPosts(): Promise<Post[]> {
-    return this.postModel.find().exec();
+    return this.postModel.find().sort({ createdAt: -1 }).exec();
   }
 
   async getPostById(id: string): Promise<Post> {
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      throw new BadRequestException('Invalid id');
+    }
     return this.postModel.findById(id).exec();
   }
 
