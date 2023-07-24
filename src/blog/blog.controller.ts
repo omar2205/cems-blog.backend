@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Post, Put, Delete, Param } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Param,
+} from '@nestjs/common';
 import { BlogService } from './blog.service';
 
 @Controller('blog')
@@ -12,7 +20,10 @@ export class BlogController {
 
   @Get(':id')
   async getPostById(@Param('id') id: string) {
-    return this.blogService.getPostById(id);
+    return (await this.blogService.getPostById(id)).populate(
+      'author',
+      '-password',
+    );
   }
 
   @Post()
